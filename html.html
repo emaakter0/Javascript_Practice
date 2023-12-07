@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electricity Bill Calculator</title>
+</head>
+<body>
+
+    <h1>Electricity Bill Calculator</h1>
+
+    <form id="electricityForm">
+        <label for="totalUnits">Enter total units of electricity used:</label>
+        <input type="number" id="totalUnits" name="totalUnits" required>
+        <br>
+        <button type="button" onclick="calculateElectricityBill()">Calculate Bill</button>
+    </form>
+
+    <div id="result" style="margin-top: 20px;"></div>
+
+    <script>
+        function calculateElectricityBill() {
+            // Get the input element for total units
+            const totalUnitsInput = document.getElementById('totalUnits');
+            
+            // Get the value of total units as a floating-point number
+            const totalUnits = parseFloat(totalUnitsInput.value);
+
+            // Check if the entered total units are valid
+            if (!isNaN(totalUnits) && totalUnits >= 0) {
+                // Initialize variables for bill calculation
+                let billAmount = 0;
+
+                // Calculate bill based on the provided conditions
+                if (totalUnits <= 50) {
+                    billAmount = totalUnits * 0.50;
+                } else if (totalUnits <= 150) {
+                    billAmount = 50 * 0.50 + (totalUnits - 50) * 0.75;
+                } else if (totalUnits <= 250) {
+                    billAmount = 50 * 0.50 + 100 * 0.75 + (totalUnits - 150) * 1.20;
+                } else {
+                    billAmount = 50 * 0.50 + 100 * 0.75 + 100 * 1.20 + (totalUnits - 250) * 1.50;
+                }
+
+                // Adding a 20% surcharge
+                const surcharge = billAmount * 0.20;
+                billAmount += surcharge;
+
+                // Display the result
+                document.getElementById('result').innerHTML = `<p>Total Electricity Bill: Rs. ${billAmount.toFixed(2)}</p>`;
+            } else {
+                // Display an error message for invalid input
+                alert("Invalid input. Please enter a valid number of units.");
+            }
+
+            // Clear the input field
+            totalUnitsInput.value = '';
+        }
+    </script>
+
+</body>
+</html>
